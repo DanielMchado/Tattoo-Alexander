@@ -87,44 +87,68 @@
             <h2>Galería</h2>
             <p class="section-desc">Aquí podrás ver algunos de nuestros trabajos realizados.</p>
             <div class="galeria-grid">
-                <div class="galeria-item">
+                <div class="galeria-item" data-categoria="Realismo">
                     <div class="placeholder-img" style="background-image: url('Img/realismoleon.jpeg');">
                         <i class="fas fa-image"></i>
                         <span>Realismo</span>
+                        <button type="button" class="btn-categoria">Ver más <i class="fas fa-chevron-right"></i></button>
                     </div>
                 </div>
-                <div class="galeria-item">
+                <div class="galeria-item" data-categoria="Blackwork">
                     <div class="placeholder-img" style="background-image: url('Img/dragonchino.jpeg');">
                         <i class="fas fa-feather-alt"></i>
                         <span>Blackwork</span>
+                        <button type="button" class="btn-categoria">Ver más <i class="fas fa-chevron-right"></i></button>
                     </div>
                 </div>
-                <div class="galeria-item">
+                <div class="galeria-item" data-categoria="Old School">
                     <div class="placeholder-img" style="background-image: url('Img/realismoleon.jpeg');">
                         <i class="fas fa-skull"></i>
                         <span>Old School</span>
+                        <button type="button" class="btn-categoria">Ver más <i class="fas fa-chevron-right"></i></button>
                     </div>
                 </div>
-                <div class="galeria-item">
+                <div class="galeria-item" data-categoria="Geométrico">
                     <div class="placeholder-img" style="background-image: url('Img/geometrico.jpg');">
                         <i class="fas fa-dragon"></i>
                         <span>Geométrico</span>
+                        <button type="button" class="btn-categoria">Ver más <i class="fas fa-chevron-right"></i></button>
                     </div>
                 </div>
-                <div class="galeria-item">
+                <div class="galeria-item" data-categoria="Acuarela">
                     <div class="placeholder-img" style="background-image: url('Img/acuarela.jpg');">
                         <i class="fas fa-water"></i>
                         <span>Acuarela</span>
+                        <button type="button" class="btn-categoria">Ver más <i class="fas fa-chevron-right"></i></button>
                     </div>
                 </div>
-                <div class="galeria-item">
+                <div class="galeria-item" data-categoria="Lettering">
                     <div class="placeholder-img" style="background-image: url('Img/lettering.jpg');">
                         <i class="fas fa-infinity"></i>
                         <span>Lettering</span>
+                        <button type="button" class="btn-categoria">Ver más <i class="fas fa-chevron-right"></i></button>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- LIGHTBOX DE GALERIA -->
+        <div class="lightbox" id="galeriaLightbox">
+            <button type="button" class="lightbox-cerrar" id="lightboxCerrar" aria-label="Cerrar">
+                <i class="fas fa-xmark"></i>
+            </button>
+            <button type="button" class="lightbox-flecha lightbox-anterior" id="lightboxAnterior" aria-label="Anterior">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="lightbox-contenido">
+                <img src="" alt="" id="lightboxImg">
+                <p class="lightbox-titulo" id="lightboxTitulo"></p>
+                <p class="lightbox-contador" id="lightboxContador"></p>
+            </div>
+            <button type="button" class="lightbox-flecha lightbox-siguiente" id="lightboxSiguiente" aria-label="Siguiente">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
 
 <!-- CONTACTO -->
 <section id="CONTACTO">

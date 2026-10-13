@@ -18,7 +18,7 @@
 }
 
 html {
-    overflow-x: hidden;
+    overflow-x: clip;
     width: 100%;
 }
 
@@ -28,7 +28,7 @@ body {
     font-family: 'Inter', sans-serif;
     line-height: 1.5;
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    overflow-x: clip;
     width: 100%;
 }
 
@@ -196,27 +196,6 @@ section h2::after {
     font-family: 'Playfair Display', serif;
 }
 
-/* ========== BOTONES ========== */
-.btn-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--acento);
-    color: #0a0a0a;
-    font-weight: bold;
-    padding: 12px 28px;
-    border-radius: 40px;
-    text-decoration: none;
-    transition: var(--transition);
-    font-size: 1rem;
-}
-
-.btn-cta:hover {
-    background: var(--acento-hover);
-    transform: scale(1.02);
-    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
-}
-
 /* ========== SERVICIOS ========== */
 .servicios-grid {
     display: grid;
@@ -328,6 +307,116 @@ section h2::after {
     letter-spacing: 1px;
 }
 
+.placeholder-img {
+    cursor: pointer;
+}
+
+.btn-categoria {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--texto-principal);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 18px;
+    border: 1px solid var(--acento);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-categoria:hover {
+    background: var(--acento);
+    color: #0a0a0a;
+}
+
+/* ========== LIGHTBOX DE GALERIA ========== */
+.lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 5, 5, 0.94);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    z-index: 1000;
+    padding: 2rem;
+}
+
+.lightbox.activo {
+    display: flex;
+}
+
+.lightbox-contenido {
+    max-width: min(90vw, 800px);
+    text-align: center;
+}
+
+.lightbox-contenido img {
+    max-width: 100%;
+    max-height: 75vh;
+    width: auto;
+    margin: 0 auto;
+    border-radius: 14px;
+    border: 1px solid var(--borde-gris);
+    box-shadow: var(--sombra);
+}
+
+.lightbox-titulo {
+    margin-top: 1.2rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--texto-principal);
+}
+
+.lightbox-contador {
+    margin-top: 0.3rem;
+    color: var(--texto-suave);
+    font-size: 0.9rem;
+}
+
+.lightbox-cerrar {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    color: var(--texto-principal);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.lightbox-cerrar:hover {
+    background: var(--acento);
+    color: #0a0a0a;
+}
+
+.lightbox-flecha {
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    color: var(--texto-principal);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.lightbox-flecha:hover {
+    background: var(--acento);
+    color: #0a0a0a;
+}
+
 /* ========== CONTACTO ========== */
 .contacto-container {
     display: flex;
@@ -409,25 +498,6 @@ section h2::after {
 
 .contacto-texto a:hover {
     color: var(--acento);
-}
-
-.btn-whatsapp {
-    background: #25d366;
-    color: #fff;
-    margin: 0.8rem 0 1.6rem;
-    width: 100%;
-    max-width: 360px;
-    justify-content: center;
-    font-size: 1.05rem;
-}
-
-.btn-whatsapp:hover {
-    background: #1ebd59;
-    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.35);
-}
-
-.btn-whatsapp i {
-    font-size: 1.3rem;
 }
 
 .contacto-divisor {
@@ -583,41 +653,6 @@ footer {
     font-size: 2rem;
 }
 
-.whatsapp-tooltip {
-    position: absolute;
-    right: 72px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: var(--fondo-card);
-    color: var(--texto-principal);
-    padding: 8px 14px;
-    border-radius: 10px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    white-space: nowrap;
-    border: 1px solid var(--borde-gris);
-    box-shadow: var(--sombra);
-    opacity: 0;
-    visibility: hidden;
-    transition: var(--transition);
-    pointer-events: none;
-}
-
-.whatsapp-tooltip.mostrar {
-    opacity: 1;
-    visibility: visible;
-}
-
-.whatsapp-tooltip::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 100%;
-    transform: translateY(-50%);
-    border: 6px solid transparent;
-    border-left-color: var(--fondo-card);
-}
-
 @keyframes whatsapp-pulse {
 
     0%,
@@ -670,7 +705,6 @@ footer {
     }
 
     .contacto-item,
-    .btn-whatsapp,
     .contacto-divisor {
         max-width: 100%;
     }
@@ -681,6 +715,22 @@ footer {
 
     .galeria-grid {
         grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+
+    .lightbox {
+        padding: 1rem;
+        gap: 0.5rem;
+    }
+
+    .lightbox-flecha {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .lightbox-cerrar {
+        top: 10px;
+        right: 10px;
     }
 }
 
@@ -707,9 +757,5 @@ footer {
 
     .whatsapp-float i {
         font-size: 1.7rem;
-    }
-
-    .whatsapp-tooltip {
-        display: none;
     }
 }
