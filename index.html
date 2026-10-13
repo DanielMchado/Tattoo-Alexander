@@ -132,22 +132,32 @@
             </div>
         </section>
 
-        <!-- LIGHTBOX DE GALERIA -->
-        <div class="lightbox" id="galeriaLightbox">
-            <button type="button" class="lightbox-cerrar" id="lightboxCerrar" aria-label="Cerrar">
+        <!-- VENTANA MODAL: galería completa de una categoría (se llena desde Jalex.js) -->
+        <div class="modal-galeria" id="modalGaleria" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+            <div class="modal-caja">
+                <div class="modal-cabecera">
+                    <h3 id="modalTitulo"></h3>
+                    <button type="button" class="modal-cerrar" id="modalCerrar" aria-label="Cerrar galería">
+                        <i class="fas fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="modal-grid" id="modalGrid"></div>
+            </div>
+        </div>
+
+        <!-- VISOR: foto ampliada dentro de la ventana modal -->
+        <div class="visor" id="visorFoto" role="dialog" aria-modal="true" aria-label="Foto ampliada">
+            <button type="button" class="visor-cerrar" id="visorCerrar" aria-label="Cerrar foto">
                 <i class="fas fa-xmark"></i>
             </button>
-            <button type="button" class="lightbox-flecha lightbox-anterior" id="lightboxAnterior" aria-label="Anterior">
+            <button type="button" class="visor-flecha" id="visorAnterior" aria-label="Foto anterior">
                 <i class="fas fa-chevron-left"></i>
             </button>
-            <div class="lightbox-contenido">
-                <img src="" alt="" id="lightboxImg">
-                <p class="lightbox-titulo" id="lightboxTitulo"></p>
-                <p class="lightbox-contador" id="lightboxContador"></p>
-            </div>
-            <button type="button" class="lightbox-flecha lightbox-siguiente" id="lightboxSiguiente" aria-label="Siguiente">
+            <img src="" alt="" id="visorImg">
+            <button type="button" class="visor-flecha" id="visorSiguiente" aria-label="Foto siguiente">
                 <i class="fas fa-chevron-right"></i>
             </button>
+            <p class="visor-contador" id="visorContador"></p>
         </div>
 
 <!-- CONTACTO -->

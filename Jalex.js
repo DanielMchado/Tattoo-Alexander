@@ -1,226 +1,185 @@
-// ========== LIGHTBOX DE GALERIA POR CATEGORIA ==========
-// Cada tarjeta de la galería tiene su propio botón "Ver más".
-// Al hacer clic, se abre el lightbox mostrando SOLO las fotos de esa
-// categoría (las que estén listadas en data-fotos, separadas por coma).
-
-document.addEventListener('DOMContentLoaded', function () {
-    var tarjetas = document.querySelectorAll('#GALERIA .galeria-item');
-    var lightbox = document.getElementById('galeriaLightbox');
-    var lightboxImg = document.getElementById('lightboxImg');
-    var lightboxTitulo = document.getElementById('lightboxTitulo');
-    var lightboxContador = document.getElementById('lightboxContador');
-    var btnCerrar = document.getElementById('lightboxCerrar');
-    var btnAnterior = document.getElementById('lightboxAnterior');
-    var btnSiguiente = document.getElementById('lightboxSiguiente');
-
-    if (!tarjetas.length || !lightbox) return;
-
-    var fotosActuales = [];
-    var categoriaActual = '';
-    var indiceActual = 0;
-
-    function abrirCategoria(tarjeta) {
-        categoriaActual = tarjeta.dataset.categoria || '';
-        fotosActuales = (tarjeta.dataset.fotos || '')
-            .split(',')
-            .map(function (f) { return f.trim(); })
-            .filter(Boolean);
-
-        if (!fotosActuales.length) return;
-
-        indiceActual = 0;
-        mostrarFoto();
-
-        // Si solo hay una foto en esta categoría, ocultamos las flechas
-        var soloUna = fotosActuales.length <= 1;
-        btnAnterior.style.display = soloUna ? 'none' : 'flex';
-        btnSiguiente.style.display = soloUna ? 'none' : 'flex';
-
-        lightbox.classList.add('activo');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function cerrarLightbox() {
-        lightbox.classList.remove('activo');
-        document.body.style.overflow = '';
-    }
-
-    function mostrarFoto() {
-        lightboxImg.src = fotosActuales[indiceActual];
-        lightboxImg.alt = categoriaActual;
-        lightboxTitulo.textContent = categoriaActual;
-        lightboxContador.textContent = (indiceActual + 1) + ' / ' + fotosActuales.length;
-    }
-
-    function anterior() {
-        indiceActual = (indiceActual - 1 + fotosActuales.length) % fotosActuales.length;
-        mostrarFoto();
-    }
-
-    function siguiente() {
-        indiceActual = (indiceActual + 1) % fotosActuales.length;
-        mostrarFoto();
-    }
-
-    tarjetas.forEach(function (tarjeta) {
-        var boton = tarjeta.querySelector('.btn-categoria');
-        if (boton) {
-            boton.addEventListener('click', function (e) {
-                e.stopPropagation();
-                abrirCategoria(tarjeta);
-            });
-        }
-        // Clic en cualquier parte de la tarjeta también abre esa categoría
-        tarjeta.addEventListener('click', function () { abrirCategoria(tarjeta); });
-    });
-
-    btnCerrar.addEventListener('click', cerrarLightbox);
-    btnAnterior.addEventListener('click', anterior);
-    btnSiguiente.addEventListener('click', siguiente);
-
-    lightbox.addEventListener('click', function (e) {
-        if (e.target === lightbox) cerrarLightbox();
-    });
-
-    document.addEventListener('keydown', function (e) {
-        if (!lightbox.classList.contains('activo')) return;
-        if (e.key === 'Escape') cerrarLightbox();
-        if (e.key === 'ArrowLeft') anterior();
-        if (e.key === 'ArrowRight') siguiente();
-    });
-});
-
 // ============================================================
-//  FOTOS DE LA GALERÍA — EDITA AQUÍ PARA AGREGAR MÁS FOTOS
+//  FOTOS DE LA GALERÍA — AQUÍ AGREGAS TUS FOTOS
 // ============================================================
-// Cada categoría tiene su nombre arriba y, abajo, la lista de
-// fotos de esa categoría. Para agregar una foto nueva:
+// Cada categoría tiene su nombre arriba y, dentro de los
+// corchetes [ ], la lista de fotos de ese estilo.
 //
-//   1. Sube el archivo de la foto a la carpeta "Img".
-//   2. Agrega una línea nueva con su nombre, así:
+// Para agregar una foto nueva:
+//   1. Copia la foto a la carpeta "Img" de tu proyecto.
+//   2. Dentro de los corchetes de la categoría, agrega una línea:
 //        'Img/nombre-de-tu-foto.jpg',
+//      (entre comillas, con coma al final, una foto por línea)
 //
-// Puedes poner las que quieras por categoría (1, 5, 20...).
-// El botón "Ver más" y las flechas del lightbox se ajustan solos.
+// Puedes poner todas las fotos que quieras en cada categoría.
+// Si una categoría queda vacía [ ], la ventana mostrará un
+// mensaje de "pronto subiremos más trabajos".
 // ============================================================
 
 const FOTOS_GALERIA = {
 
     'Realismo': [
         'Img/realismoleon.jpeg',
-        // agrega aquí más fotos de Realismo, una por línea
+        // 'Img/realismo-2.jpg',
     ],
 
     'Blackwork': [
         'Img/dragonchino.jpeg',
-        'BlackWork1.jpeg',
-        // agrega aquí más fotos de Blackwork, una por línea
+        // 'Img/blackwork-2.jpg',
     ],
 
     'Old School': [
-        'Img/realismoleon.jpeg',
-        // agrega aquí más fotos de Old School, una por línea
+        // 'Img/oldschool-1.jpg',
     ],
 
     'Geométrico': [
-        'Img/geometrico.jpg',
-        // agrega aquí más fotos de Geométrico, una por línea
+        // 'Img/geometrico-1.jpg',
     ],
 
     'Acuarela': [
-        'Img/acuarela.jpg',
-        // agrega aquí más fotos de Acuarela, una por línea
+        // 'Img/acuarela-1.jpg',
     ],
 
     'Lettering': [
-        'Img/lettering.jpg',
-        // agrega aquí más fotos de Lettering, una por línea
+        // 'Img/lettering-1.jpg',
     ],
 
 };
 
 // ============================================================
-//  LIGHTBOX DE GALERIA POR CATEGORIA (no hace falta tocar esto)
+//  VENTANA MODAL + VISOR (no hace falta tocar esto)
 // ============================================================
 
 document.addEventListener('DOMContentLoaded', function () {
     var tarjetas = document.querySelectorAll('#GALERIA .galeria-item');
-    var lightbox = document.getElementById('galeriaLightbox');
-    var lightboxImg = document.getElementById('lightboxImg');
-    var lightboxTitulo = document.getElementById('lightboxTitulo');
-    var lightboxContador = document.getElementById('lightboxContador');
-    var btnCerrar = document.getElementById('lightboxCerrar');
-    var btnAnterior = document.getElementById('lightboxAnterior');
-    var btnSiguiente = document.getElementById('lightboxSiguiente');
+    var modal = document.getElementById('modalGaleria');
+    var modalTitulo = document.getElementById('modalTitulo');
+    var modalGrid = document.getElementById('modalGrid');
+    var modalCerrar = document.getElementById('modalCerrar');
+    var visor = document.getElementById('visorFoto');
+    var visorImg = document.getElementById('visorImg');
+    var visorContador = document.getElementById('visorContador');
+    var visorCerrar = document.getElementById('visorCerrar');
+    var visorAnterior = document.getElementById('visorAnterior');
+    var visorSiguiente = document.getElementById('visorSiguiente');
 
-    if (!tarjetas.length || !lightbox) return;
+    if (!tarjetas.length || !modal || !visor) return;
 
-    var fotosActuales = [];
     var categoriaActual = '';
+    var fotosActuales = [];
     var indiceActual = 0;
+    var elementoPrevio = null;
 
-    function abrirCategoria(categoria) {
-        fotosActuales = FOTOS_GALERIA[categoria] || [];
-        if (!fotosActuales.length) return;
+    // ---------- Ventana modal (cuadrícula de la categoría) ----------
 
+    function abrirModal(categoria) {
         categoriaActual = categoria;
-        indiceActual = 0;
-        mostrarFoto();
+        fotosActuales = FOTOS_GALERIA[categoria] || [];
+        elementoPrevio = document.activeElement;
 
-        var soloUna = fotosActuales.length <= 1;
-        btnAnterior.style.display = soloUna ? 'none' : 'flex';
-        btnSiguiente.style.display = soloUna ? 'none' : 'flex';
+        modalTitulo.textContent = categoria;
+        modalGrid.textContent = '';
+        modalGrid.scrollTop = 0;
 
-        lightbox.classList.add('activo');
-        document.body.style.overflow = 'hidden';
-    }
+        if (!fotosActuales.length) {
+            var vacio = document.createElement('div');
+            vacio.className = 'modal-vacio';
+            vacio.innerHTML = '<i class="fas fa-images"></i><p>Pronto subiremos más trabajos de este estilo.</p>';
+            modalGrid.appendChild(vacio);
+        } else {
+            fotosActuales.forEach(function (src, i) {
+                var boton = document.createElement('button');
+                boton.type = 'button';
+                boton.className = 'modal-foto';
+                boton.setAttribute('aria-label', 'Ampliar foto ' + (i + 1) + ' de ' + categoria);
 
-    function cerrarLightbox() {
-        lightbox.classList.remove('activo');
-        document.body.style.overflow = '';
-    }
+                var img = document.createElement('img');
+                img.src = src;
+                img.alt = 'Tatuaje de ' + categoria + ' - foto ' + (i + 1);
+                img.loading = 'lazy';
 
-    function mostrarFoto() {
-        lightboxImg.src = fotosActuales[indiceActual];
-        lightboxImg.alt = categoriaActual;
-        lightboxTitulo.textContent = categoriaActual;
-        lightboxContador.textContent = (indiceActual + 1) + ' / ' + fotosActuales.length;
-    }
-
-    function anterior() {
-        indiceActual = (indiceActual - 1 + fotosActuales.length) % fotosActuales.length;
-        mostrarFoto();
-    }
-
-    function siguiente() {
-        indiceActual = (indiceActual + 1) % fotosActuales.length;
-        mostrarFoto();
-    }
-
-    tarjetas.forEach(function (tarjeta) {
-        var categoria = tarjeta.dataset.categoria;
-        var boton = tarjeta.querySelector('.btn-categoria');
-        if (boton) {
-            boton.addEventListener('click', function (e) {
-                e.stopPropagation();
-                abrirCategoria(categoria);
+                boton.appendChild(img);
+                boton.addEventListener('click', function () { abrirVisor(i); });
+                modalGrid.appendChild(boton);
             });
         }
-        tarjeta.addEventListener('click', function () { abrirCategoria(categoria); });
+
+        modal.classList.add('activo');
+        document.body.style.overflow = 'hidden';
+        modalCerrar.focus();
+    }
+
+    function cerrarModal() {
+        modal.classList.remove('activo');
+        document.body.style.overflow = '';
+        if (elementoPrevio && elementoPrevio.focus) elementoPrevio.focus();
+    }
+
+    // ---------- Visor (foto ampliada) ----------
+
+    function mostrarEnVisor() {
+        visorImg.src = fotosActuales[indiceActual];
+        visorImg.alt = 'Tatuaje de ' + categoriaActual + ' - foto ' + (indiceActual + 1);
+        visorContador.textContent = (indiceActual + 1) + ' / ' + fotosActuales.length;
+        var variasFotos = fotosActuales.length > 1;
+        visorAnterior.hidden = !variasFotos;
+        visorSiguiente.hidden = !variasFotos;
+    }
+
+    function abrirVisor(indice) {
+        indiceActual = indice;
+        mostrarEnVisor();
+        visor.classList.add('activo');
+        visorCerrar.focus();
+    }
+
+    function cerrarVisor() {
+        visor.classList.remove('activo');
+    }
+
+    function fotoAnterior() {
+        indiceActual = (indiceActual - 1 + fotosActuales.length) % fotosActuales.length;
+        mostrarEnVisor();
+    }
+
+    function fotoSiguiente() {
+        indiceActual = (indiceActual + 1) % fotosActuales.length;
+        mostrarEnVisor();
+    }
+
+    // ---------- Eventos ----------
+
+    // Clic en una tarjeta (o en su botón "Ver más") abre esa categoría
+    tarjetas.forEach(function (tarjeta) {
+        tarjeta.addEventListener('click', function () {
+            abrirModal(tarjeta.dataset.categoria);
+        });
     });
 
-    btnCerrar.addEventListener('click', cerrarLightbox);
-    btnAnterior.addEventListener('click', anterior);
-    btnSiguiente.addEventListener('click', siguiente);
+    modalCerrar.addEventListener('click', cerrarModal);
+    visorCerrar.addEventListener('click', cerrarVisor);
+    visorAnterior.addEventListener('click', fotoAnterior);
+    visorSiguiente.addEventListener('click', fotoSiguiente);
 
-    lightbox.addEventListener('click', function (e) {
-        if (e.target === lightbox) cerrarLightbox();
+    // Clic en el fondo oscuro cierra
+    modal.addEventListener('click', function (e) {
+        if (e.target === modal) cerrarModal();
+    });
+    visor.addEventListener('click', function (e) {
+        if (e.target === visor) cerrarVisor();
     });
 
+    // Teclado: Esc cierra (primero el visor, luego la ventana), flechas cambian de foto
     document.addEventListener('keydown', function (e) {
-        if (!lightbox.classList.contains('activo')) return;
-        if (e.key === 'Escape') cerrarLightbox();
-        if (e.key === 'ArrowLeft') anterior();
-        if (e.key === 'ArrowRight') siguiente();
+        var visorAbierto = visor.classList.contains('activo');
+        var modalAbierto = modal.classList.contains('activo');
+
+        if (e.key === 'Escape') {
+            if (visorAbierto) cerrarVisor();
+            else if (modalAbierto) cerrarModal();
+        }
+        if (visorAbierto && fotosActuales.length > 1) {
+            if (e.key === 'ArrowLeft') fotoAnterior();
+            if (e.key === 'ArrowRight') fotoSiguiente();
+        }
     });
 });
