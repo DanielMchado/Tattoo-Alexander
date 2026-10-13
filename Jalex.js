@@ -183,3 +183,46 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+// ============================================================
+//  APARECER AL HACER SCROLL (no hace falta tocar esto)
+// ============================================================
+// Las secciones con la clase "revelar" aparecen al bajar y se
+// ocultan otra vez cuando el usuario sube y quedan debajo de la
+// pantalla. Para que otra sección haga lo mismo, solo agrégale
+// class="revelar" en el HTML.
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (!document.documentElement.classList.contains('js-revelar')) return;
+
+    var secciones = document.querySelectorAll('.revelar');
+    var pendiente = false;
+
+    function actualizar() {
+        pendiente = false;
+        var altoPantalla = window.innerHeight;
+
+        secciones.forEach(function (seccion) {
+            var caja = seccion.getBoundingClientRect();
+
+            if (caja.top < altoPantalla * 0.88 && caja.bottom > 0) {
+                // Entró a la pantalla: aparece
+                seccion.classList.add('visible');
+            } else if (caja.top >= altoPantalla) {
+                // Quedó completamente debajo de la pantalla (el usuario subió): se oculta
+                seccion.classList.remove('visible');
+            }
+        });
+    }
+
+    function alHacerScroll() {
+        if (!pendiente) {
+            pendiente = true;
+            window.requestAnimationFrame(actualizar);
+        }
+    }
+
+    window.addEventListener('scroll', alHacerScroll, { passive: true });
+    window.addEventListener('resize', alHacerScroll);
+    actualizar();
+});

@@ -747,6 +747,19 @@ footer {
     }
 }
 
+/* ========== APARECER AL HACER SCROLL ========== */
+/* Solo se oculta si el <head> activó "js-revelar"; así nunca queda contenido invisible. */
+.js-revelar .revelar {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.js-revelar .revelar.visible {
+    opacity: 1;
+    transform: none;
+}
+
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
     .hero-carousel {
