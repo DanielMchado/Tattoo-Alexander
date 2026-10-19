@@ -902,7 +902,31 @@ footer {
     }
 
     .galeria-grid {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.9rem;
+        margin: 1.5rem 0 1rem;
+    }
+
+    .galeria-item {
+        border-radius: 16px;
+    }
+
+    .placeholder-img {
+        gap: 8px;
+    }
+
+    .placeholder-img i {
+        font-size: 2.2rem;
+    }
+
+    .placeholder-img span {
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+    }
+
+    .btn-categoria {
+        font-size: 0.8rem;
+        padding: 7px 14px;
     }
 
     .modal-galeria {
@@ -949,8 +973,25 @@ footer {
         font-size: 1.6rem;
     }
 
+    .galeria-grid {
+        gap: 0.7rem;
+    }
+
+    .placeholder-img {
+        gap: 6px;
+    }
+
     .placeholder-img i {
-        font-size: 2.4rem;
+        font-size: 1.8rem;
+    }
+
+    .placeholder-img span {
+        font-size: 0.9rem;
+    }
+
+    .btn-categoria {
+        font-size: 0.75rem;
+        padding: 6px 12px;
     }
 
     .servicios-grid {
