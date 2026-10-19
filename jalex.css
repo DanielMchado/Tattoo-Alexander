@@ -199,34 +199,91 @@ section h2::after {
 /* ========== SERVICIOS ========== */
 .servicios-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.8rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
     margin-top: 1rem;
 }
 
 .servicio-card {
-    background: var(--fondo-card);
-    padding: 2rem 1.5rem;
-    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #161616 0%, var(--fondo-card) 60%);
+    padding: 2.4rem 1.5rem 2rem;
+    border-radius: 22px;
     text-align: center;
     border: 1px solid var(--borde-gris);
     transition: var(--transition);
 }
 
+/* Línea dorada que se dibuja arriba al pasar el mouse */
+.servicio-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--acento), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
 .servicio-card:hover {
     transform: translateY(-6px);
     border-color: var(--acento);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.45), 0 0 24px rgba(212, 175, 55, 0.08);
 }
 
-.servicio-card i {
-    font-size: 2.8rem;
+.servicio-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* Número grande y tenue de fondo */
+.servicio-num {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: 1;
+    color: rgba(212, 175, 55, 0.12);
+    transition: var(--transition);
+}
+
+.servicio-card:hover .servicio-num {
+    color: rgba(212, 175, 55, 0.3);
+}
+
+.servicio-icono {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.04));
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    transition: var(--transition);
+}
+
+.servicio-icono i {
+    font-size: 1.9rem;
     color: var(--acento);
-    margin-bottom: 1rem;
+}
+
+.servicio-card:hover .servicio-icono {
+    background: var(--acento);
+    transform: scale(1.06);
+}
+
+.servicio-card:hover .servicio-icono i {
+    color: #0a0a0a;
 }
 
 .servicio-card h3 {
-    font-size: 1.4rem;
+    font-size: 1.25rem;
     margin-bottom: 0.6rem;
     font-weight: 600;
 }
@@ -761,6 +818,12 @@ footer {
 }
 
 /* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+    .servicios-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
     .hero-carousel {
         min-height: 0;
@@ -805,7 +868,37 @@ footer {
     }
 
     .servicios-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.9rem;
+    }
+
+    .servicio-card {
+        padding: 1.8rem 0.9rem 1.4rem;
+        border-radius: 18px;
+    }
+
+    .servicio-num {
+        font-size: 1.9rem;
+        top: 8px;
+        right: 12px;
+    }
+
+    .servicio-icono {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 1rem;
+    }
+
+    .servicio-icono i {
+        font-size: 1.5rem;
+    }
+
+    .servicio-card h3 {
+        font-size: 1.05rem;
+    }
+
+    .servicio-card p {
+        font-size: 0.85rem;
     }
 
     .galeria-grid {
@@ -858,6 +951,22 @@ footer {
 
     .placeholder-img i {
         font-size: 2.4rem;
+    }
+
+    .servicios-grid {
+        gap: 0.7rem;
+    }
+
+    .servicio-card {
+        padding: 1.5rem 0.7rem 1.2rem;
+    }
+
+    .servicio-card h3 {
+        font-size: 0.98rem;
+    }
+
+    .servicio-card p {
+        font-size: 0.8rem;
     }
 
     .whatsapp-float {
