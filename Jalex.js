@@ -10,7 +10,6 @@
 //        'Img/nombre-de-tu-foto.jpg',
 //      (entre comillas, con coma al final, una foto por línea)
 //
-// Puedes poner todas las fotos que quieras en cada categoría.
 // Si una categoría queda vacía [ ], la ventana mostrará un
 // mensaje de "pronto subiremos más trabajos".
 // ============================================================
@@ -28,7 +27,8 @@ const FOTOS_GALERIA = {
     ],
 
     'Old School': [
-        // 'Img/oldschool-1.jpg',
+        'Img/BlackWork1.jpeg',
+        // 'Img/oldschool-2.jpg',
     ],
 
     'Geométrico': [
@@ -46,39 +46,107 @@ const FOTOS_GALERIA = {
 };
 
 // ============================================================
-//  VENTANA MODAL + VISOR (no hace falta tocar esto)
+//  PANTALLA DE CARGA
+// ============================================================
+
+(function () {
+    var loader  = document.getElementById('loader');
+    var barra   = document.getElementById('loaderBarra');
+    var pct     = document.getElementById('loaderPct');
+
+    if (!loader) return;
+
+    var progreso = 0;
+    var duracion = 2600; // ms totales de la barra
+    var intervalo = 30;
+    var paso = (100 / (duracion / intervalo));
+
+    var timer = setInterval(function () {
+        progreso = Math.min(progreso + paso + (Math.random() * paso * 0.5), 98);
+        barra.style.width = progreso + '%';
+        pct.textContent   = Math.round(progreso) + '%';
+    }, intervalo);
+
+    // Cuando todo el documento esté listo, lleva al 100% y oculta
+    function terminar() {
+        clearInterval(timer);
+        progreso = 100;
+        barra.style.width = '100%';
+        pct.textContent   = '100%';
+        setTimeout(function () {
+            loader.classList.add('oculto');
+            // Elimina del DOM tras la transición para liberar memoria
+            setTimeout(function () { loader.remove(); }, 650);
+        }, 350);
+    }
+
+    if (document.readyState === 'complete') {
+        terminar();
+    } else {
+        window.addEventListener('load', terminar);
+        // Seguro: si tarda más de 5 s, cierra igual
+        setTimeout(terminar, 5000);
+    }
+})();
+
+// ============================================================
+//  GALERÍA: FILTROS + MODAL + VISOR
 // ============================================================
 
 document.addEventListener('DOMContentLoaded', function () {
-    var tarjetas = document.querySelectorAll('#GALERIA .galeria-item');
-    var modal = document.getElementById('modalGaleria');
-    var modalTitulo = document.getElementById('modalTitulo');
-    var modalGrid = document.getElementById('modalGrid');
-    var modalCerrar = document.getElementById('modalCerrar');
-    var visor = document.getElementById('visorFoto');
-    var visorImg = document.getElementById('visorImg');
-    var visorContador = document.getElementById('visorContador');
-    var visorCerrar = document.getElementById('visorCerrar');
-    var visorAnterior = document.getElementById('visorAnterior');
-    var visorSiguiente = document.getElementById('visorSiguiente');
 
-    if (!tarjetas.length || !modal || !visor) return;
+    // ---- Filtros de categoría ----
+    var filtros   = document.querySelectorAll('.filtro-btn');
+    var items     = document.querySelectorAll('#galeriaGrid .galeria-item');
+
+    filtros.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var cat = btn.dataset.filtro;
+
+            // Activo visual
+            filtros.forEach(function (b) { b.classList.remove('activo'); });
+            btn.classList.add('activo');
+
+            // Mostrar / ocultar items
+            items.forEach(function (item) {
+                if (cat === 'todos' || item.dataset.categoria === cat) {
+                    item.classList.remove('oculto');
+                } else {
+                    item.classList.add('oculto');
+                }
+            });
+        });
+    });
+
+    // ---- Modal + Visor ----
+    var modal         = document.getElementById('modalGaleria');
+    var modalTitulo   = document.getElementById('modalTitulo');
+    var modalGrid     = document.getElementById('modalGrid');
+    var modalCerrar   = document.getElementById('modalCerrar');
+    var visor         = document.getElementById('visorFoto');
+    var visorImg      = document.getElementById('visorImg');
+    var visorContador = document.getElementById('visorContador');
+    var visorCerrar   = document.getElementById('visorCerrar');
+    var visorAnterior = document.getElementById('visorAnterior');
+    var visorSiguiente= document.getElementById('visorSiguiente');
+
+    if (!modal || !visor) return;
 
     var categoriaActual = '';
-    var fotosActuales = [];
-    var indiceActual = 0;
-    var elementoPrevio = null;
+    var fotosActuales   = [];
+    var indiceActual    = 0;
+    var elementoPrevio  = null;
 
-    // ---------- Ventana modal (cuadrícula de la categoría) ----------
+    // --- Modal (cuadrícula de categoría) ---
 
     function abrirModal(categoria) {
         categoriaActual = categoria;
-        fotosActuales = FOTOS_GALERIA[categoria] || [];
-        elementoPrevio = document.activeElement;
+        fotosActuales   = FOTOS_GALERIA[categoria] || [];
+        elementoPrevio  = document.activeElement;
 
         modalTitulo.textContent = categoria;
-        modalGrid.textContent = '';
-        modalGrid.scrollTop = 0;
+        modalGrid.textContent   = '';
+        modalGrid.scrollTop     = 0;
 
         if (!fotosActuales.length) {
             var vacio = document.createElement('div');
@@ -93,8 +161,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 boton.setAttribute('aria-label', 'Ampliar foto ' + (i + 1) + ' de ' + categoria);
 
                 var img = document.createElement('img');
-                img.src = src;
-                img.alt = 'Tatuaje de ' + categoria + ' - foto ' + (i + 1);
+                img.src     = src;
+                img.alt     = 'Tatuaje de ' + categoria + ' - foto ' + (i + 1);
                 img.loading = 'lazy';
 
                 boton.appendChild(img);
@@ -114,15 +182,15 @@ document.addEventListener('DOMContentLoaded', function () {
         if (elementoPrevio && elementoPrevio.focus) elementoPrevio.focus();
     }
 
-    // ---------- Visor (foto ampliada) ----------
+    // --- Visor (foto ampliada) ---
 
     function mostrarEnVisor() {
         visorImg.src = fotosActuales[indiceActual];
         visorImg.alt = 'Tatuaje de ' + categoriaActual + ' - foto ' + (indiceActual + 1);
         visorContador.textContent = (indiceActual + 1) + ' / ' + fotosActuales.length;
-        var variasFotos = fotosActuales.length > 1;
-        visorAnterior.hidden = !variasFotos;
-        visorSiguiente.hidden = !variasFotos;
+        var varias = fotosActuales.length > 1;
+        visorAnterior.hidden  = !varias;
+        visorSiguiente.hidden = !varias;
     }
 
     function abrirVisor(indice) {
@@ -146,12 +214,12 @@ document.addEventListener('DOMContentLoaded', function () {
         mostrarEnVisor();
     }
 
-    // ---------- Eventos ----------
+    // --- Eventos ---
 
-    // Clic en una tarjeta (o en su botón "Ver más") abre esa categoría
-    tarjetas.forEach(function (tarjeta) {
-        tarjeta.addEventListener('click', function () {
-            abrirModal(tarjeta.dataset.categoria);
+    // Clic en tarjeta de galería abre el modal de esa categoría
+    items.forEach(function (item) {
+        item.addEventListener('click', function () {
+            abrirModal(item.dataset.categoria);
         });
     });
 
@@ -160,15 +228,11 @@ document.addEventListener('DOMContentLoaded', function () {
     visorAnterior.addEventListener('click', fotoAnterior);
     visorSiguiente.addEventListener('click', fotoSiguiente);
 
-    // Clic en el fondo oscuro cierra
-    modal.addEventListener('click', function (e) {
-        if (e.target === modal) cerrarModal();
-    });
-    visor.addEventListener('click', function (e) {
-        if (e.target === visor) cerrarVisor();
-    });
+    // Clic en fondo oscuro cierra
+    modal.addEventListener('click', function (e) { if (e.target === modal) cerrarModal(); });
+    visor.addEventListener('click', function (e)  { if (e.target === visor)  cerrarVisor();  });
 
-    // Teclado: Esc cierra (primero el visor, luego la ventana), flechas cambian de foto
+    // Teclado: Esc cierra, flechas navegan
     document.addEventListener('keydown', function (e) {
         var visorAbierto = visor.classList.contains('activo');
         var modalAbierto = modal.classList.contains('activo');
@@ -178,19 +242,17 @@ document.addEventListener('DOMContentLoaded', function () {
             else if (modalAbierto) cerrarModal();
         }
         if (visorAbierto && fotosActuales.length > 1) {
-            if (e.key === 'ArrowLeft') fotoAnterior();
+            if (e.key === 'ArrowLeft')  fotoAnterior();
             if (e.key === 'ArrowRight') fotoSiguiente();
         }
     });
 });
 
 // ============================================================
-//  APARECER AL HACER SCROLL (no hace falta tocar esto)
+//  APARECER AL HACER SCROLL
 // ============================================================
-// Las secciones con la clase "revelar" aparecen al bajar y se
-// ocultan otra vez cuando el usuario sube y quedan debajo de la
-// pantalla. Para que otra sección haga lo mismo, solo agrégale
-// class="revelar" en el HTML.
+// Las secciones con class="revelar" aparecen suavemente al
+// entrar en pantalla y se ocultan si el usuario sube.
 
 document.addEventListener('DOMContentLoaded', function () {
     if (!document.documentElement.classList.contains('js-revelar')) return;
@@ -206,10 +268,8 @@ document.addEventListener('DOMContentLoaded', function () {
             var caja = seccion.getBoundingClientRect();
 
             if (caja.top < altoPantalla * 0.88 && caja.bottom > 0) {
-                // Entró a la pantalla: aparece
                 seccion.classList.add('visible');
             } else if (caja.top >= altoPantalla) {
-                // Quedó completamente debajo de la pantalla (el usuario subió): se oculta
                 seccion.classList.remove('visible');
             }
         });

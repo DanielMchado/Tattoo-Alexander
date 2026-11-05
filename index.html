@@ -3,43 +3,239 @@
 
 <head>
     <meta charset="UTF-8">
-    <!-- Activa la animación de aparecer al hacer scroll (se omite si la persona tiene las animaciones reducidas en su sistema) -->
     <script>if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js-revelar');</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="description"
-        content="Tattoo Alexander | Arte en la piel con pasión y profesionalismo. Tatuajes personalizados, cover-ups y diseño en Rivas, Nicaragua.">
+    <meta name="description" content="Tattoo Alexander | Arte en la piel con pasión y profesionalismo. Tatuajes personalizados, cover-ups y diseño en Rivas, Nicaragua.">
     <title>Tattoo Alexander | Arte en la Piel</title>
-    <!-- Preconnect para fuentes y mejor rendimiento -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Google Fonts: estilos modernos y elegantes -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
-        rel="stylesheet">
-    <!-- Font Awesome 6 (íconos gratuitos) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Archivo CSS externo -->
     <link rel="stylesheet" href="jalex.css">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SFY36GDJT0"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-SFY36GDJT0');
-</script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SFY36GDJT0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-SFY36GDJT0');
+    </script>
 </head>
 
-<body> 
-    <header> <!---Encabezado-->
+<body>
+
+    <!-- ===== PANTALLA DE CARGA PREMIUM ===== -->
+    <div id="loader" class="loader-overlay" aria-hidden="true">
+
+        <p class="loader-marca">Tattoo Alexander</p>
+
+        <!-- Escena donde la máquina viaja de izq → der tatuando -->
+        <div class="loader-escena">
+
+            <!-- Línea de "piel" -->
+            <div class="loader-piel"></div>
+
+            <!-- Trazo que se dibuja progresivamente bajo la máquina -->
+            <svg class="trazo-svg" viewBox="0 0 560 36"
+                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path class="trazo-path"
+                    d="M 0 24 C 40 6, 80 32, 140 18 S 220 4, 280 20 S 360 36, 420 16 S 500 6, 560 22"
+                    stroke="#d4af37" stroke-width="2.2" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+            <!-- ═══ MÁQUINA DE TATUAR (coil machine tipo la referencia) ═══ -->
+            <div class="maquina-wrap">
+                <svg class="maquina-svg"
+                     viewBox="-35 -25 150 200"
+                     xmlns="http://www.w3.org/2000/svg"
+                     overflow="visible" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="gFrame" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%"   stop-color="#d0d0d0"/>
+                            <stop offset="45%"  stop-color="#909090"/>
+                            <stop offset="100%" stop-color="#606060"/>
+                        </linearGradient>
+                        <linearGradient id="gCoil" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%"   stop-color="#252525"/>
+                            <stop offset="40%"  stop-color="#3c3c3c"/>
+                            <stop offset="100%" stop-color="#101010"/>
+                        </linearGradient>
+                        <linearGradient id="gGrip" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%"   stop-color="#101010"/>
+                            <stop offset="50%"  stop-color="#2c2c2c"/>
+                            <stop offset="100%" stop-color="#101010"/>
+                        </linearGradient>
+                        <linearGradient id="gBar" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%"   stop-color="#d8d8d8"/>
+                            <stop offset="50%"  stop-color="#959595"/>
+                            <stop offset="100%" stop-color="#b8b8b8"/>
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Todo rotado -22° para imitar el ángulo de la referencia -->
+                    <g transform="rotate(-22, 40, 82)">
+
+                        <!-- ══ MARCO PRINCIPAL (frame) ══ -->
+                        <!-- Sombra del marco -->
+                        <rect x="10" y="13" width="64" height="58" rx="5"
+                              fill="#000" opacity="0.4"/>
+                        <!-- Marco exterior metálico -->
+                        <rect x="8"  y="11" width="64" height="58" rx="5"
+                              fill="url(#gFrame)" stroke="#aaa" stroke-width="1.4"/>
+                        <!-- Recorte interior oscuro (donde van las bobinas) -->
+                        <rect x="13" y="21" width="54" height="44" rx="3"
+                              fill="#0a0a0a"/>
+                        <!-- Rieles laterales del marco -->
+                        <rect x="8"  y="11" width="9"  height="58" rx="4"
+                              fill="#b8b8b8" stroke="#999" stroke-width="0.7"/>
+                        <rect x="63" y="11" width="9"  height="58" rx="4"
+                              fill="#b8b8b8" stroke="#999" stroke-width="0.7"/>
+
+                        <!-- ══ BARRA ARMADURA (arriba del marco) ══ -->
+                        <rect x="6"  y="5"  width="68" height="11" rx="4"
+                              fill="url(#gBar)" stroke="#bbb" stroke-width="1"/>
+                        <!-- Ojal central de la armadura -->
+                        <ellipse cx="40" cy="10.5" rx="4" ry="3"
+                                 fill="#888" stroke="#ccc" stroke-width="0.7"/>
+                        <ellipse cx="40" cy="10.5" rx="2" ry="1.5" fill="#555"/>
+
+                        <!-- ══ TORNILLO DE CONTACTO (esquina superior derecha) ══ -->
+                        <rect x="66" y="0" width="13" height="8" rx="2.5"
+                              fill="#888" stroke="#bbb" stroke-width="0.8"/>
+                        <circle cx="72.5" cy="0" r="4.5"
+                                fill="#555" stroke="#ccc" stroke-width="0.9"/>
+                        <line x1="69.5" y1="0" x2="75.5" y2="0"
+                              stroke="#999" stroke-width="1.3"/>
+                        <line x1="72.5" y1="-3" x2="72.5" y2="3"
+                              stroke="#999" stroke-width="1.3"/>
+
+                        <!-- ══ BARRA LATERAL IZQUIERDA (binding post) ══ -->
+                        <rect x="-4" y="29" width="14" height="4" rx="2"
+                              fill="url(#gBar)" stroke="#bbb" stroke-width="0.8"/>
+                        <circle cx="-2" cy="31" r="3.5"
+                                fill="#888" stroke="#ccc" stroke-width="0.8"/>
+                        <circle cx="9"  cy="31" r="3.5"
+                                fill="#888" stroke="#ccc" stroke-width="0.8"/>
+
+                        <!-- ══ CABLE DE PODER (curva superior derecha) ══ -->
+                        <path d="M 74 11 C 85 7 88 0 86 -12"
+                              stroke="#3a3a3a" stroke-width="2.8"
+                              fill="none" stroke-linecap="round"/>
+                        <circle cx="86" cy="-13" r="3.2"
+                                fill="#d4af37" opacity="0.75"/>
+
+                        <!-- ══ BOBINA IZQUIERDA ══ -->
+                        <!-- Cuerpo cilíndrico negro -->
+                        <rect x="14" y="23" width="22" height="38" rx="6"
+                              fill="url(#gCoil)" stroke="#444" stroke-width="0.9"/>
+                        <!-- Anillos de devanado (efecto enrollado) -->
+                        <line x1="14" y1="28" x2="36" y2="28" stroke="#141414" stroke-width="1.6"/>
+                        <line x1="14" y1="32" x2="36" y2="32" stroke="#141414" stroke-width="1.6"/>
+                        <line x1="14" y1="36" x2="36" y2="36" stroke="#141414" stroke-width="1.6"/>
+                        <line x1="14" y1="40" x2="36" y2="40" stroke="#141414" stroke-width="1.6"/>
+                        <line x1="14" y1="44" x2="36" y2="44" stroke="#141414" stroke-width="1.6"/>
+                        <line x1="14" y1="48" x2="36" y2="48" stroke="#141414" stroke-width="1.6"/>
+                        <line x1="14" y1="52" x2="36" y2="52" stroke="#141414" stroke-width="1.6"/>
+                        <line x1="14" y1="56" x2="36" y2="56" stroke="#141414" stroke-width="1.6"/>
+                        <!-- Tapas metálicas bobina izq -->
+                        <rect x="13" y="21" width="24" height="6" rx="3"
+                              fill="#606060" stroke="#888" stroke-width="0.8"/>
+                        <rect x="13" y="57" width="24" height="6" rx="3"
+                              fill="#606060" stroke="#888" stroke-width="0.8"/>
+                        <!-- Reflejo cilíndrico (brillo lateral izquierdo) -->
+                        <rect x="14" y="23" width="4" height="38" rx="2"
+                              fill="#555" opacity="0.55"/>
+
+                        <!-- ══ BOBINA DERECHA ══ -->
+                        <rect x="44" y="23" width="22" height="38" rx="6"
+                              fill="url(#gCoil)" stroke="#444" stroke-width="0.9"/>
+                        <!-- Anillos de devanado -->
+                        <line x1="44" y1="28" x2="66" y2="28" stroke="#141414" stroke-width="1.6"/>
+                        <line x1="44" y1="32" x2="66" y2="32" stroke="#141414" stroke-width="1.6"/>
+                        <line x1="44" y1="36" x2="66" y2="36" stroke="#141414" stroke-width="1.6"/>
+                        <line x1="44" y1="40" x2="66" y2="40" stroke="#141414" stroke-width="1.6"/>
+                        <line x1="44" y1="44" x2="66" y2="44" stroke="#141414" stroke-width="1.6"/>
+                        <line x1="44" y1="48" x2="66" y2="48" stroke="#141414" stroke-width="1.6"/>
+                        <line x1="44" y1="52" x2="66" y2="52" stroke="#141414" stroke-width="1.6"/>
+                        <line x1="44" y1="56" x2="66" y2="56" stroke="#141414" stroke-width="1.6"/>
+                        <!-- Tapas metálicas bobina der -->
+                        <rect x="43" y="21" width="24" height="6" rx="3"
+                              fill="#606060" stroke="#888" stroke-width="0.8"/>
+                        <rect x="43" y="57" width="24" height="6" rx="3"
+                              fill="#606060" stroke="#888" stroke-width="0.8"/>
+                        <!-- Reflejo cilíndrico der -->
+                        <rect x="44" y="23" width="4" height="38" rx="2"
+                              fill="#555" opacity="0.55"/>
+
+                        <!-- ══ COLLAR SUPERIOR DEL GRIP ══ -->
+                        <rect x="27" y="68" width="26" height="7" rx="3.5"
+                              fill="#555" stroke="#777" stroke-width="0.8"/>
+
+                        <!-- ══ GRIP (mango cilíndrico negro) ══ -->
+                        <rect x="29" y="74" width="22" height="52" rx="10"
+                              fill="url(#gGrip)" stroke="#2a2a2a" stroke-width="1"/>
+                        <!-- Anillos de textura del grip -->
+                        <line x1="30" y1="81" x2="50" y2="81" stroke="#1e1e1e" stroke-width="1.6"/>
+                        <line x1="30" y1="87" x2="50" y2="87" stroke="#1e1e1e" stroke-width="1.6"/>
+                        <line x1="30" y1="93" x2="50" y2="93" stroke="#1e1e1e" stroke-width="1.6"/>
+                        <line x1="30" y1="99" x2="50" y2="99" stroke="#1e1e1e" stroke-width="1.6"/>
+                        <line x1="30" y1="105" x2="50" y2="105" stroke="#1e1e1e" stroke-width="1.6"/>
+                        <line x1="30" y1="111" x2="50" y2="111" stroke="#1e1e1e" stroke-width="1.6"/>
+                        <line x1="30" y1="117" x2="50" y2="117" stroke="#1e1e1e" stroke-width="1.6"/>
+                        <!-- Reflejo del grip -->
+                        <rect x="29" y="74" width="5" height="52" rx="2.5"
+                              fill="#383838" opacity="0.6"/>
+
+                        <!-- ══ COLLAR INFERIOR DEL GRIP ══ -->
+                        <rect x="27" y="124" width="26" height="7" rx="3.5"
+                              fill="#555" stroke="#777" stroke-width="0.8"/>
+
+                        <!-- ══ BOQUILLA / TIP ══ -->
+                        <rect x="33" y="130" width="14" height="14" rx="4"
+                              fill="#181818" stroke="#666" stroke-width="0.8"/>
+                        <line x1="38" y1="130" x2="38" y2="144"
+                              stroke="#2a2a2a" stroke-width="1"/>
+                        <line x1="42" y1="130" x2="42" y2="144"
+                              stroke="#2a2a2a" stroke-width="1"/>
+                        <!-- Punta cónica -->
+                        <polygon points="33,143 47,143 43,150 37,150"
+                                 fill="#141414" stroke="#777" stroke-width="0.7"/>
+
+                        <!-- ══ AGUJA (animada: sube y baja) ══ -->
+                        <line class="aguja"
+                              x1="40" y1="149" x2="40" y2="162"
+                              stroke="#d4af37" stroke-width="2.4"
+                              stroke-linecap="round"/>
+
+                        <!-- ══ PUNTO DE TINTA (parpadeo en la punta) ══ -->
+                        <circle class="tinta-punto"
+                                cx="40" cy="163" r="3"
+                                fill="#d4af37"/>
+
+                    </g><!-- /g rotate -->
+                </svg>
+            </div><!-- /maquina-wrap -->
+        </div><!-- /loader-escena -->
+
+        <!-- Texto + barra de progreso -->
+        <div class="loader-inferior">
+            <p class="loader-texto">Arte en la piel<span class="loader-puntos"></span></p>
+            <div class="loader-barra-wrap">
+                <div class="loader-barra" id="loaderBarra"></div>
+            </div>
+            <span class="loader-pct" id="loaderPct">0%</span>
+        </div>
+
+    </div>
+
+    <header>
         <h1>Tattoo Alexander</h1>
         <nav>
             <a href="#INICIO">Inicio</a>
             <a href="#SERVICIOS">Servicios</a>
             <a href="#GALERIA">Galería</a>
             <a href="#CONTACTO">Contacto</a>
-            <!-- <a href="#PRODUCTOS">Productos</a> -->
         </nav>
     </header>
 
@@ -59,8 +255,7 @@
         <!-- SERVICIOS -->
         <section id="SERVICIOS" class="revelar">
             <h2>Nuestros Servicios</h2>
-            <p class="section-desc">Ofrecemos tatuajes personalizados, cover-ups, diseño de tatuajes y asesoría
-                profesional.</p>
+            <p class="section-desc">Ofrecemos tatuajes personalizados, cover-ups, diseño de tatuajes y asesoría profesional.</p>
             <div class="servicios-grid">
                 <div class="servicio-card">
                     <span class="servicio-num">01</span>
@@ -92,54 +287,72 @@
         <!-- GALERIA -->
         <section id="GALERIA" class="revelar">
             <h2>Galería</h2>
-            <p class="section-desc">Aquí podrás ver algunos de nuestros trabajos realizados.</p>
-            <div class="galeria-grid">
+            <p class="section-desc">Explora nuestros estilos y trabajos realizados. Haz clic en cualquier categoría para verla completa.</p>
+
+            <!-- Filtros de categoría -->
+            <div class="galeria-filtros" id="galeriaFiltros">
+                <button class="filtro-btn activo" data-filtro="todos">Todos</button>
+                <button class="filtro-btn" data-filtro="Realismo">Realismo</button>
+                <button class="filtro-btn" data-filtro="Blackwork">Blackwork</button>
+                <button class="filtro-btn" data-filtro="Old School">Old School</button>
+                <button class="filtro-btn" data-filtro="Geométrico">Geométrico</button>
+                <button class="filtro-btn" data-filtro="Acuarela">Acuarela</button>
+                <button class="filtro-btn" data-filtro="Lettering">Lettering</button>
+            </div>
+
+            <div class="galeria-grid" id="galeriaGrid">
                 <div class="galeria-item" data-categoria="Realismo">
-                    <div class="placeholder-img" style="background-image: url('Img/realismoleon.jpeg');">
-                        <i class="fas fa-image"></i>
-                        <span>Realismo</span>
-                        <button type="button" class="btn-categoria">Ver más <i class="fas fa-chevron-right"></i></button>
+                    <div class="galeria-img" style="background-image: url('Img/realismoleon.jpeg');">
+                        <div class="galeria-overlay">
+                            <span class="galeria-label">Realismo</span>
+                            <button type="button" class="galeria-ver-btn">Ver galería</button>
+                        </div>
                     </div>
                 </div>
                 <div class="galeria-item" data-categoria="Blackwork">
-                    <div class="placeholder-img" style="background-image: url('Img/dragonchino.jpeg');">
-                        <i class="fas fa-feather-alt"></i>
-                        <span>Blackwork</span>
-                        <button type="button" class="btn-categoria">Ver más <i class="fas fa-chevron-right"></i></button>
+                    <div class="galeria-img" style="background-image: url('Img/dragonchino.jpeg');">
+                        <div class="galeria-overlay">
+                            <span class="galeria-label">Blackwork</span>
+                            <button type="button" class="galeria-ver-btn">Ver galería</button>
+                        </div>
                     </div>
                 </div>
                 <div class="galeria-item" data-categoria="Old School">
-                    <div class="placeholder-img" style="background-image: url('Img/realismoleon.jpeg');">
-                        <i class="fas fa-skull"></i>
-                        <span>Old School</span>
-                        <button type="button" class="btn-categoria">Ver más <i class="fas fa-chevron-right"></i></button>
+                    <div class="galeria-img" style="background-image: url('Img/BlackWork1.jpeg');">
+                        <div class="galeria-overlay">
+                            <span class="galeria-label">Old School</span>
+                            <button type="button" class="galeria-ver-btn">Ver galería</button>
+                        </div>
                     </div>
                 </div>
                 <div class="galeria-item" data-categoria="Geométrico">
-                    <div class="placeholder-img" style="background-image: url('Img/geometrico.jpg');">
-                        <i class="fas fa-dragon"></i>
-                        <span>Geométrico</span>
-                        <button type="button" class="btn-categoria">Ver más <i class="fas fa-chevron-right"></i></button>
+                    <div class="galeria-img" style="background-image: url('Img/realismoleon.jpeg');">
+                        <div class="galeria-overlay">
+                            <span class="galeria-label">Geométrico</span>
+                            <button type="button" class="galeria-ver-btn">Ver galería</button>
+                        </div>
                     </div>
                 </div>
                 <div class="galeria-item" data-categoria="Acuarela">
-                    <div class="placeholder-img" style="background-image: url('Img/acuarela.jpg');">
-                        <i class="fas fa-water"></i>
-                        <span>Acuarela</span>
-                        <button type="button" class="btn-categoria">Ver más <i class="fas fa-chevron-right"></i></button>
+                    <div class="galeria-img" style="background-image: url('Img/dragonchino.jpeg');">
+                        <div class="galeria-overlay">
+                            <span class="galeria-label">Acuarela</span>
+                            <button type="button" class="galeria-ver-btn">Ver galería</button>
+                        </div>
                     </div>
                 </div>
                 <div class="galeria-item" data-categoria="Lettering">
-                    <div class="placeholder-img" style="background-image: url('Img/lettering.jpg');">
-                        <i class="fas fa-infinity"></i>
-                        <span>Lettering</span>
-                        <button type="button" class="btn-categoria">Ver más <i class="fas fa-chevron-right"></i></button>
+                    <div class="galeria-img" style="background-image: url('Img/BlackWork1.jpeg');">
+                        <div class="galeria-overlay">
+                            <span class="galeria-label">Lettering</span>
+                            <button type="button" class="galeria-ver-btn">Ver galería</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- VENTANA MODAL: galería completa de una categoría (se llena desde Jalex.js) -->
+        <!-- VENTANA MODAL: galería completa de una categoría -->
         <div class="modal-galeria" id="modalGaleria" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
             <div class="modal-caja">
                 <div class="modal-cabecera">
@@ -152,7 +365,7 @@
             </div>
         </div>
 
-        <!-- VISOR: foto ampliada dentro de la ventana modal -->
+        <!-- VISOR: foto ampliada -->
         <div class="visor" id="visorFoto" role="dialog" aria-modal="true" aria-label="Foto ampliada">
             <button type="button" class="visor-cerrar" id="visorCerrar" aria-label="Cerrar foto">
                 <i class="fas fa-xmark"></i>
@@ -167,66 +380,55 @@
             <p class="visor-contador" id="visorContador"></p>
         </div>
 
-<!-- CONTACTO -->
-<section id="CONTACTO" class="revelar">
-    <h2>Contáctanos</h2>
-    <p class="section-desc">¿Listo para tu próximo tatuaje? Escríbenos y con gusto te asesoramos.</p>
-    <div class="contacto-container">
-        <div class="contacto-info">
-            <div class="contacto-item">
-                <div class="contacto-icono">
-                    <i class="fab fa-whatsapp"></i>
+        <!-- CONTACTO -->
+        <section id="CONTACTO" class="revelar">
+            <h2>Contáctanos</h2>
+            <p class="section-desc">¿Listo para tu próximo tatuaje? Escríbenos y con gusto te asesoramos.</p>
+            <div class="contacto-container">
+                <div class="contacto-info">
+                    <div class="contacto-item">
+                        <div class="contacto-icono"><i class="fab fa-whatsapp"></i></div>
+                        <div class="contacto-texto">
+                            <span class="contacto-label">WhatsApp</span>
+                            <a href="https://wa.me/50585835311?text=Hola%2C%20vi%20su%20p%C3%A1gina%20web%20y%20me%20gustar%C3%ADa%20cotizar%20un%20tatuaje.%20Tengo%20una%20idea%20y%20quisiera%20conocer%20el%20precio%20y%20la%20disponibilidad." target="_blank" rel="noopener noreferrer">+505 8583 5311</a>
+                        </div>
+                    </div>
+                    <div class="contacto-item">
+                        <div class="contacto-icono"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="contacto-texto">
+                            <span class="contacto-label">Ubicación</span>
+                            <p>Rivas, Nicaragua — Estudio de tatuaje profesional.</p>
+                        </div>
+                    </div>
+                    <div class="contacto-divisor"></div>
+                    <p class="redes-titulo">Síguenos en:</p>
+                    <div class="redes-sociales">
+                        <a href="https://www.instagram.com/alexanderlopez4422/" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/311artcollection" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.tiktok.com/@alexander.lopez8582" aria-label="TikTok" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
+                    </div>
                 </div>
-                <div class="contacto-texto">
-                    <span class="contacto-label">WhatsApp</span>
-                    <a href="https://wa.me/50585835311?text=Hola%2C%20vi%20su%20p%C3%A1gina%20web%20y%20me%20gustar%C3%ADa%20cotizar%20un%20tatuaje.%20Tengo%20una%20idea%20y%20quisiera%20conocer%20el%20precio%20y%20la%20disponibilidad." target="_blank" rel="noopener noreferrer">+505 8583 5311</a>
+                <div class="mapa-container">
+                    <div class="mapa-header">
+                        <div class="mapa-header-info">
+                            <i class="fas fa-location-dot"></i>
+                            <span>Nuestra ubicación</span>
+                        </div>
+                        <a class="mapa-direccion-btn"
+                            href="https://www.google.com/maps/dir/?api=1&destination=11.441483662195276,-85.8258881623161"
+                            target="_blank" rel="noopener noreferrer">
+                            Cómo llegar <i class="fas fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </div>
+                    <div class="mapa-frame">
+                        <iframe class="Mapa"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d201.12761657476346!2d-85.8258881623161!3d11.441483662195276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f744f228a3b0b9b%3A0xc410ebf60bcb712b!2sTattoo%20Alexander!5e1!3m2!1ses-419!2sni!4v1776577980999!5m2!1ses-419!2sni"
+                            allowfullscreen="" loading="lazy" title="Ubicación Tattoo Alexander"></iframe>
+                    </div>
                 </div>
             </div>
-            <div class="contacto-item">
-                <div class="contacto-icono">
-                    <i class="fas fa-map-marker-alt"></i>
-                </div>
-                <div class="contacto-texto">
-                    <span class="contacto-label">Ubicación</span>
-                    <p>Rivas, Nicaragua — Estudio de tatuaje profesional.</p>
-                </div>
-            </div>
-            <div class="contacto-divisor"></div>
-
-            <p class="redes-titulo">Síguenos en:</p>
-            <div class="redes-sociales">
-                <a href="https://www.instagram.com/alexanderlopez4422/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://www.facebook.com/311artcollection" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="https://www.tiktok.com/@alexander.lopez8582" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-tiktok"></i>
-                </a>
-            </div>
-        </div>
-        <div class="mapa-container">
-            <div class="mapa-header">
-                <div class="mapa-header-info">
-                    <i class="fas fa-location-dot"></i>
-                    <span>Nuestra ubicación</span>
-                </div>
-                <a class="mapa-direccion-btn"
-                    href="https://www.google.com/maps/dir/?api=1&destination=11.441483662195276,-85.8258881623161"
-                    target="_blank" rel="noopener noreferrer">
-                    Cómo llegar <i class="fas fa-arrow-up-right-from-square"></i>
-                </a>
-            </div>
-            <div class="mapa-frame">
-                <iframe class="Mapa"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d201.12761657476346!2d-85.8258881623161!3d11.441483662195276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f744f228a3b0b9b%3A0xc410ebf60bcb712b!2sTattoo%20Alexander!5e1!3m2!1ses-419!2sni!4v1776577980999!5m2!1ses-419!2sni"
-                    allowfullscreen="" loading="lazy" title="Ubicación Tattoo Alexander"></iframe>
-            </div>
-        </div>
-    </div>
-</section>
-</main>
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2025 Tattoo Alexander — Arte en la piel con pasión y profesionalismo.</p>
