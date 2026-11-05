@@ -138,7 +138,7 @@ img {
 .trazo-path {
     stroke-dasharray: 500;
     stroke-dashoffset: 500;
-    animation: dibujartrace 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation: dibujartrace 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes dibujartrace {
@@ -152,7 +152,7 @@ img {
     position: absolute;
     bottom: 16px;
     left: 0;
-    animation: maquinaviaja 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation: maquinaviaja 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     filter:
         drop-shadow(0 0 10px rgba(212,175,55,0.5))
         drop-shadow(0 0 24px rgba(212,175,55,0.2));
@@ -1104,6 +1104,11 @@ footer {
     .galeria-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .galeria-item:first-child {
+        grid-column: span 2;
+        grid-row: span 1;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1170,7 +1175,11 @@ footer {
         gap: 0.8rem;
     }
 
-    /* En móvil el overlay siempre visible (no hay hover) */
+    .galeria-item:first-child {
+        grid-column: span 2;
+        grid-row: span 1;
+    }
+
     .galeria-overlay { opacity: 1; }
 
     .modal-galeria { padding: 0.8rem; }
@@ -1201,6 +1210,10 @@ footer {
     .galeria-grid {
         grid-template-columns: 1fr 1fr;
         gap: 0.6rem;
+    }
+
+    .galeria-item:first-child {
+        grid-column: span 2;
     }
 
     .servicios-grid { gap: 0.7rem; }

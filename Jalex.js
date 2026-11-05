@@ -56,21 +56,39 @@ const FOTOS_GALERIA = {
 
     if (!loader) return;
 
-    var progreso = 0;
-    var duracion = 2600; // ms totales de la barra
-    var intervalo = 30;
-    var paso = (100 / (duracion / intervalo));
+    // ⏱️ TIEMPO MÍNIMO QUE SE VE LA PANTALLA DE CARGA (en milisegundos)
+    // 6000 = 6 segundos. Cámbialo aquí si lo quieres más corto o más largo.
+    // Si cambias este valor, cambia también la duración (6s) de las animaciones
+    // .trazo-path y .maquina-wrap en jalex.css para que vayan sincronizadas.
+    var DURACION_MINIMA = 6000;
+
+    // Seguro: si la página tarda muchísimo en cargar, cierra igual a los 12 s
+    var DURACION_MAXIMA = 12000;
+
+    var inicio    = Date.now();
+    var cargado   = false;   // ¿ya cargó toda la página?
+    var terminado = false;   // evita cerrar dos veces
 
     var timer = setInterval(function () {
-        progreso = Math.min(progreso + paso + (Math.random() * paso * 0.5), 98);
+        var transcurrido = Date.now() - inicio;
+
+        // La barra avanza según el tiempo, así llega al final justo a los 6 s.
+        // Se queda en 99% si la página aún no termina de cargar.
+        var progreso = Math.min((transcurrido / DURACION_MINIMA) * 100, 99);
         barra.style.width = progreso + '%';
         pct.textContent   = Math.round(progreso) + '%';
-    }, intervalo);
 
-    // Cuando todo el documento esté listo, lleva al 100% y oculta
+        // Solo cierra cuando pasó el tiempo mínimo Y la página ya cargó
+        if (transcurrido >= DURACION_MINIMA && cargado) {
+            terminar();
+        }
+    }, 30);
+
+    // Lleva al 100% y oculta la pantalla de carga
     function terminar() {
+        if (terminado) return;
+        terminado = true;
         clearInterval(timer);
-        progreso = 100;
         barra.style.width = '100%';
         pct.textContent   = '100%';
         setTimeout(function () {
@@ -80,12 +98,15 @@ const FOTOS_GALERIA = {
         }, 350);
     }
 
+    // Marca que la página ya cargó (pero NO cierra todavía: espera los 6 s)
+    function alCargar() { cargado = true; }
+
     if (document.readyState === 'complete') {
-        terminar();
+        alCargar();
     } else {
-        window.addEventListener('load', terminar);
-        // Seguro: si tarda más de 5 s, cierra igual
-        setTimeout(terminar, 5000);
+        window.addEventListener('load', alCargar);
+        // Seguro por si el evento "load" tarda demasiado
+        setTimeout(function () { alCargar(); }, DURACION_MAXIMA);
     }
 })();
 
