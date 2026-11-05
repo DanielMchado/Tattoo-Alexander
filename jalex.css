@@ -1105,10 +1105,6 @@ footer {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .galeria-item:first-child {
-        grid-column: span 2;
-        grid-row: span 1;
-    }
 }
 
 @media (max-width: 768px) {
@@ -1175,11 +1171,6 @@ footer {
         gap: 0.8rem;
     }
 
-    .galeria-item:first-child {
-        grid-column: span 2;
-        grid-row: span 1;
-    }
-
     .galeria-overlay { opacity: 1; }
 
     .modal-galeria { padding: 0.8rem; }
@@ -1210,10 +1201,6 @@ footer {
     .galeria-grid {
         grid-template-columns: 1fr 1fr;
         gap: 0.6rem;
-    }
-
-    .galeria-item:first-child {
-        grid-column: span 2;
     }
 
     .servicios-grid { gap: 0.7rem; }
