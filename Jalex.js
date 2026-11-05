@@ -57,10 +57,10 @@ const FOTOS_GALERIA = {
     if (!loader) return;
 
     // ⏱️ TIEMPO MÍNIMO QUE SE VE LA PANTALLA DE CARGA (en milisegundos)
-    // 6000 = 6 segundos. Cámbialo aquí si lo quieres más corto o más largo.
-    // Si cambias este valor, cambia también la duración (6s) de las animaciones
+    // 4000 = 4 segundos. Cámbialo aquí si lo quieres más corto o más largo.
+    // Si cambias este valor, cambia también la duración (4s) de las animaciones
     // .trazo-path y .maquina-wrap en jalex.css para que vayan sincronizadas.
-    var DURACION_MINIMA = 6000;
+    var DURACION_MINIMA = 4000;
 
     // Seguro: si la página tarda muchísimo en cargar, cierra igual a los 12 s
     var DURACION_MAXIMA = 12000;
@@ -72,7 +72,7 @@ const FOTOS_GALERIA = {
     var timer = setInterval(function () {
         var transcurrido = Date.now() - inicio;
 
-        // La barra avanza según el tiempo, así llega al final justo a los 6 s.
+        // La barra avanza según el tiempo, así llega al final justo a los 4 s.
         // Se queda en 99% si la página aún no termina de cargar.
         var progreso = Math.min((transcurrido / DURACION_MINIMA) * 100, 99);
         barra.style.width = progreso + '%';
@@ -98,7 +98,7 @@ const FOTOS_GALERIA = {
         }, 350);
     }
 
-    // Marca que la página ya cargó (pero NO cierra todavía: espera los 6 s)
+    // Marca que la página ya cargó (pero NO cierra todavía: espera los 4 s)
     function alCargar() { cargado = true; }
 
     if (document.readyState === 'complete') {
